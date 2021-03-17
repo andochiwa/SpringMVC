@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <context:component-scan base-package="com.me.controller"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--声明拦截器：拦截器可以有0或多个
+        实际为ArrayList集合，由上往下顺序执行
+    -->
+    <mvc:interceptors>
+        <!--第一个拦截器-->
+        <mvc:interceptor>
+            <!--指定拦截的请求uri地址-->
+            <mvc:mapping path="/**"/>
+            <!--声明拦截器对象-->
+            <bean class="com.me.handler.MyInterceptor"/>
+        </mvc:interceptor>
+        <!--第二个拦截器-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.me.handler.MyInterceptor2"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>

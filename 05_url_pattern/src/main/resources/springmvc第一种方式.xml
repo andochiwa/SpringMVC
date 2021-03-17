@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <context:component-scan base-package="com.me"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--default-servlet-handler和@RequestMapping注解有冲突，需要加入注解驱动来解决这个问题-->
+    <mvc:annotation-driven/>
+
+    <!--第一种处理静态资源的方式
+        需要在springmvc.xml配置文件中加入<mvc:default-servlet-handler>
+        原理为：创建一个DefaultServletHttpRequestHandler对象(类似于我们创建的Mycontroller)
+        这个对象可以把接收的请求转发给tomcat的default这个servlet
+    -->
+    <mvc:default-servlet-handler/>
+
+</beans>
